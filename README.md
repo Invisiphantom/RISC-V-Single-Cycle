@@ -14,10 +14,8 @@ WSL、Code Runner、TerosHDL
 - GTKWave
 
 ## Contained Files:
-- WSL-Verilog.code-profile
-My VS Code workspace profile
-- ROM.txt
-Binary RISC-V Instructions that will be read into InstructionMemory.v verilog module
+- WSL-Verilog.code-profile (My VSCode verilog-workspace profile)
+- ROM.txt (Binary RISC-V Instructions that will be read into InstructionMemory.v verilog module)
 - arch_tb.v
 - PC.v
 - InstructionMemory.v
