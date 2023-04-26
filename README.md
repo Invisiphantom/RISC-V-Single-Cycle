@@ -6,12 +6,12 @@
 [merledu/SIngle-Cycle-RISC-V-In-Verilog(github.com)](https://github.com/merledu/SIngle-Cycle-RISC-V-In-Verilog)
 
 ## Environment(with profile below):
-WSL2-Ubuntu22.04
-VS Code
-Core VS  Code Extensions:
+- WSL2-Ubuntu22.04
+- VS Code
+- Core VS  Code Extensions:
 WSL、Code Runner、TerosHDL
-Icarus Verilog
-GTKWave
+- Icarus Verilog
+- GTKWave
 
 ## Contained Files:
 1. WSL-Verilog.code-profile
