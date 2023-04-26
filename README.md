@@ -1,6 +1,6 @@
 # RISC-V-SIngle-Cycle
 ## Supported ISA:
-- RV32I(without lui、auipc、ecall、ebreak)
+- RV32I (without lui、auipc、ecall、ebreak)
 ## Reference Material:
 - 《COD》(RISC-V version)
 - [RISCV_CARD.pdf (sfu.ca)](https://www.cs.sfu.ca/~ashriram/Courses/CS295/assets/notebooks/RISCV/RISCV_CARD.pdf)
