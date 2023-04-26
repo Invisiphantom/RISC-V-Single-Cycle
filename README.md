@@ -1,9 +1,9 @@
 # RISC-V-SIngle-Cycle
 ## Reference Material:
-《COD》(RISC-V version)
-[RISCV_CARD.pdf (sfu.ca)](https://www.cs.sfu.ca/~ashriram/Courses/CS295/assets/notebooks/RISCV/RISCV_CARD.pdf)
-[Online RISC-V Assembler (lucasteske.dev)](https://riscvasm.lucasteske.dev/#)
-[merledu/SIngle-Cycle-RISC-V-In-Verilog(github.com)](https://github.com/merledu/SIngle-Cycle-RISC-V-In-Verilog)
+- 《COD》(RISC-V version)
+- [RISCV_CARD.pdf (sfu.ca)](https://www.cs.sfu.ca/~ashriram/Courses/CS295/assets/notebooks/RISCV/RISCV_CARD.pdf)
+- [Online RISC-V Assembler (lucasteske.dev)](https://riscvasm.lucasteske.dev/#)
+- [merledu/SIngle-Cycle-RISC-V-In-Verilog(github.com)](https://github.com/merledu/SIngle-Cycle-RISC-V-In-Verilog)
 
 ## Environment(with profile below):
 - WSL2-Ubuntu22.04
