@@ -31,3 +31,11 @@ WSL、Code Runner、TerosHDL
 - ALUControl.v
 - ALU.v
 - DataMemory.v
+
+## SVG
+![[https://raw.githubusercontent.com/Invisiphantom/RISC-V-SIngle-Cycle/main/SVG/RISC-V-Single-Cycle.svg]]
+![[https://raw.githubusercontent.com/Invisiphantom/RISC-V-SIngle-Cycle/main/SVG/Control.svg]]
+![[https://raw.githubusercontent.com/Invisiphantom/RISC-V-SIngle-Cycle/main/SVG/ALUControl.svg]]
+![[https://raw.githubusercontent.com/Invisiphantom/RISC-V-SIngle-Cycle/main/SVG/ALU.svg]]
+![[https://raw.githubusercontent.com/Invisiphantom/RISC-V-SIngle-Cycle/main/SVG/Registers.svg]]
+![[https://raw.githubusercontent.com/Invisiphantom/RISC-V-SIngle-Cycle/main/SVG/BranchJudge.svg]]
