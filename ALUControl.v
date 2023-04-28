@@ -9,9 +9,7 @@ module ALUControl (
 			2'b00 : ALU_control <= 4'b0010;
 			2'b01 : ALU_control <= 4'b0110;
 			2'b10 :
-				case ({
-							funct7, funct3
-						})
+				case ({funct7, funct3})
 					4'b0000 : ALU_control <= 4'b0010;  // add
 					4'b1000 : ALU_control <= 4'b0110;  // sub
 					4'b0100 : ALU_control <= 4'b0111;  // xor
@@ -25,9 +23,7 @@ module ALUControl (
 					default : ALU_control <= 4'bxxxx;
 				endcase
 			2'b11 :
-				casez ({
-							funct7, funct3
-						})
+				casez ({funct7, funct3})
 					4'bz000 : ALU_control <= 4'b0010;  // addi
 					4'bz100 : ALU_control <= 4'b0111;  // xori
 					4'bz110 : ALU_control <= 4'b0001;  // ori

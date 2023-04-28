@@ -4,8 +4,8 @@ module ALU (
 	input      [64-1:0] A2         ,
 	output reg [64-1:0] Y          ,
 	output              zero       ,
-	output              s_less     ,
-	output              u_less
+	output reg          s_less     ,
+	output reg          u_less
 );
 	always @(*) begin
 		case (ALU_control)
@@ -27,13 +27,10 @@ module ALU (
 			end
 			default : Y = {64{1'bx}};
 		endcase
-
 	end
-	wire signed   s_Y;
-	wire unsigned u_Y;
-	assign s_Y    = Y;
-	assign u_Y    = Y;
-	assign zero   = (Y == {64{1'b0}}) ? 1'b1 : 1'b0;
-	assign s_less = (s_Y < 0) ? 1'b1 : 1'b0;
-	assign u_less = (u_Y < 0) ? 1'b1 : 1'b0;
+	assign zero = (Y == {64{1'b0}}) ? 1'b1 : 1'b0;
+	always @(A1 or A2) begin
+		s_less = ($signed(A1) < $signed(A2)) ? 1 : 0;
+		u_less = ($unsigned(A1) < $unsigned(A2)) ? 1 : 0;
+	end
 endmodule

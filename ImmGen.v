@@ -13,5 +13,4 @@ module ImmGen (
 			default    : Out <= {64{1'h0}};
 		endcase
 	end
-	//assign Out = {{52{In[31]}},In[31:20]};
 endmodule

@@ -6,9 +6,9 @@ module DataMemory (
 	input      [63:0] WriteData,
 	output reg [63:0] ReadData
 );
-	reg [63:0] mem1[511:0];
-	always @(clk, MemRead, MemWrite) begin
-		if (MemRead == 1'b1) ReadData <= mem1[address];
-		else if (MemWrite == 1'b1) mem1[address] = WriteData;
+	reg [63:0] mem[511:0];
+	always @(*) begin
+		if (MemRead == 1'b1) ReadData <= mem[address];
+		else if (MemWrite == 1'b1) mem[address] = WriteData;
 	end
 endmodule
