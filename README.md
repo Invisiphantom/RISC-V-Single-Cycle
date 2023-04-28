@@ -34,19 +34,29 @@ WSL、Code Runner、TerosHDL
 
 ## SVG
 - **arch.v**
+  
+
 ![image](https://raw.githubusercontent.com/Invisiphantom/RISC-V-SIngle-Cycle/main/SVG/RISC-V-Single-Cycle.svg)
 ---
 - **Control.v**
+  
+
 ![image](https://raw.githubusercontent.com/Invisiphantom/RISC-V-SIngle-Cycle/main/SVG/Control.svg)
 ---
 - **ALUControl.v**
 ![image](https://raw.githubusercontent.com/Invisiphantom/RISC-V-SIngle-Cycle/main/SVG/ALUControl.svg)
 ---
 - **ALU.v**
+  
+
 ![image](https://raw.githubusercontent.com/Invisiphantom/RISC-V-SIngle-Cycle/main/SVG/ALU.svg)
 ---
 - **Registers.v**
+  
+
 ![image](https://raw.githubusercontent.com/Invisiphantom/RISC-V-SIngle-Cycle/main/SVG/Registers.svg)
 ---
 - **BranchJudge.v**
+  
+
 ![image](https://raw.githubusercontent.com/Invisiphantom/RISC-V-SIngle-Cycle/main/SVG/BranchJudge.svg)
