@@ -1,139 +1,175 @@
-module arch (input clk, input PCrst);
-	reg  [63:0] PCnext   ;
-	wire [63:0] PCaddress;
-	PC u_PC (
-		.clk      (clk      ),
-		.PCrst    (PCrst    ),
-		.PCnext   (PCnext   ),
-		.PCaddress(PCaddress)
-	);
+module arch (
+    input clk
+);
+
+    wire [31:0] PCnext;
+    wire [31:0] PCaddress;
+    PC u_PC (
+        .clk      (clk),
+        .PCnext   (PCnext),
+        .PCaddress(PCaddress)
+    );
+
+    wire [31:0] PCincre;
+    PCIncre u_PCIncre (
+        .PCaddress(PCaddress),
+        .PCincre  (PCincre)
+    );
+
+    wire Halt;
+    wire Cnd;
+    wire JumpReg;
+    wire [31:0] imm;
+    wire [31:0] aluResult;
+    PCNext u_PCNext (
+        .PCaddress(PCaddress),
+        .PCincre  (PCincre),
+        .Halt     (Halt),
+        .Cnd      (Cnd),
+        .JumpReg  (JumpReg),
+        .imm      (imm),
+        .aluResult(aluResult),
+        .PCnext   (PCnext)
+    );
+
+    wire [31:0] instruction;
+    InstMem u_InstMem (
+        .PCaddress  (PCaddress),
+        .instruction(instruction)
+    );
+
+    wire RegWrite;
+    wire ALUSrc;
+    wire [1:0] ALUOp;
+    wire MemRead;
+    wire MemWrite;
+    wire Branch;
+    wire Jump;
+    wire Lui;
+    wire Auipc;
+    Control u_Control (
+        .Opcode  (instruction[6:0]),
+        .RegWrite(RegWrite),
+        .ALUSrc  (ALUSrc),
+        .ALUOp   (ALUOp),
+        .MemRead (MemRead),
+        .MemWrite(MemWrite),
+        .Branch  (Branch),
+        .Jump    (Jump),
+        .JumpReg (JumpReg),
+        .Lui     (Lui),
+        .Auipc   (Auipc),
+        .Halt    (Halt)
+    );
+
+    wire [31:0] writeData_R;
+    wire [31:0] readData1_R;
+    wire [31:0] readData2_R;
+    Regs u_Regs (
+        .clk        (clk),
+        .RegWrite   (RegWrite),
+        .readReg1   (instruction[19:15]),
+        .readReg2   (instruction[24:20]),
+        .writeReg   (instruction[11:7]),
+        .writeData_R(writeData_R),
+        .readData1_R(readData1_R),
+        .readData2_R(readData2_R)
+    );
+
+    ImmGen u_ImmGen(
+    	.instruction (instruction ),
+        .imm         (imm         )
+    );
+    
+
+    wire [3:0] aluControl;
+    ALUControl u_ALUControl (
+        .ALUOp     (ALUOp),
+        .funct7_30 (instruction[30]),
+        .funct3    (instruction[14:12]),
+        .aluControl(aluControl)
+    );
+
+    wire [31:0] aluA;
+    ALU_A u_ALU_A (
+        .Lui        (Lui),
+        .Auipc      (Auipc),
+        .readData1_R(readData1_R),
+        .PCaddress  (PCaddress),
+        .aluA       (aluA)
+    );
+
+    wire [31:0] aluB;
+    ALU_B u_ALU_B (
+        .ALUSrc     (ALUSrc),
+        .readData2_R(readData2_R),
+        .imm        (imm),
+        .aluB       (aluB)
+    );
+
+    wire zero, s_less, u_less;
+    ALU u_ALU (
+        .aluControl(aluControl),
+        .aluA      (aluA),
+        .aluB      (aluB),
+        .aluResult (aluResult),
+        .zero      (zero),
+        .s_less    (s_less),
+        .u_less    (u_less)
+    );
 
 
-	wire [31:0] Instruction;
-	InstructionMemory u_InstructionMemory (
-		.pc_address (PCaddress  ),
-		.instruction(Instruction)
-	);
+    Branch u_Branch (
+        .Branch(Branch),
+        .Jump  (Jump),
+        .zero  (zero),
+        .s_less(s_less),
+        .u_less(u_less),
+        .funct3(instruction[14:12]),
+        .Cnd   (Cnd)
+    );
+
+    wire [31:0] readData_M;
+    Mem u_Mem (
+        .clk        (clk),
+        .MemRead    (MemRead),
+        .MemWrite   (MemWrite),
+        .funct3     (instruction[14:12]),
+        .memAddr    (aluResult),
+        .writeData_M(readData2_R),
+        .readData_M (readData_M)
+    );
 
 
-	wire [63:0] PCPlus4;
-	PC4Add u_PC4Add (
-		.PC     (PCaddress),
-		.PCPlus4(PCPlus4  )
-	);
+    RegWrite u_RegWrite (
+        .MemRead    (MemRead),
+        .Jump       (Jump),
+        .JumpReg    (JumpReg),
+        .aluResult  (aluResult),
+        .readData_M (readData_M),
+        .PCincre    (PCincre),
+        .writeData_R(writeData_R)
+    );
+endmodule
 
 
-	wire [63:0] ShiftImm;
-	wire [63:0] PCSum   ;
-	wire [63:0] ExImm   ;
-	ShiftLeft1 u_ShiftLeft1 (
-		.In (ExImm   ),
-		.out(ShiftImm)
-	);
+module arch_tb;
+    reg clk;
 
+    arch arch_inst (.clk(clk));
 
-	PCAdd u_PCAdd (
-		.PCaddress(PCaddress),
-		.ShiftImm (ShiftImm ),
-		.PCSum    (PCSum    )
-	);
+    initial begin
+        repeat (100) begin
+            clk = 0;
+            #5;
+            clk = 1;
+            #5;
+        end
+        $finish;
+    end
 
-	wire Zero       ;
-	wire s_Less     ;
-	wire u_Less     ;
-	wire Jump       ;
-	wire Branch     ;
-	wire Branch_jump;
-	BranchJudge u_BranchJudge (
-		.zero       (Zero              ),
-		.s_less     (s_Less            ),
-		.u_less     (u_Less            ),
-		.Branch     (Branch            ),
-		.funct3     (Instruction[14:12]),
-		.Branch_jump(Branch_jump       )
-	);
-	always @(*) begin
-		PCnext = (Branch_jump == 1'b0 && Jump == 1'b0) ? PCPlus4 : PCSum;
-	end
-
-
-
-	wire       ALUSrc  ;
-	wire       MemtoReg;
-	wire       RegWrite;
-	wire       MemRead ;
-	wire       MemWrite;
-	wire [1:0] ALUOp   ;
-	Control u_Control (
-		.Opcode  (Instruction[6:0]),
-		.ALUSrc  (ALUSrc          ),
-		.MemtoReg(MemtoReg        ),
-		.RegWrite(RegWrite        ),
-		.MemRead (MemRead         ),
-		.MemWrite(MemWrite        ),
-		.Branch  (Branch          ),
-		.Jump    (Jump            ),
-		.ALUOp   (ALUOp           )
-	);
-
-
-	wire [63:0] ReadData1;
-	wire [63:0] ReadData2;
-	wire [63:0] WriteData;
-	Registers u_Registers (
-		.clk      (clk               ),
-		.RegWrite (RegWrite          ),
-		.ReadReg1 (Instruction[19:15]),
-		.ReadReg2 (Instruction[24:20]),
-		.WriteReg (Instruction[11:7] ),
-		.WriteData(WriteData         ),
-		.ReadData1(ReadData1         ),
-		.ReadData2(ReadData2         )
-	);
-
-
-	ImmGen u_ImmGen (
-		.In (Instruction[31:0]),
-		.Out(ExImm            )
-	);
-
-
-	wire [3:0] ALU_control;
-	ALUControl u_ALUControl (
-		.ALUOp      (ALUOp             ),
-		.funct7     (Instruction[30]   ),
-		.funct3     (Instruction[14:12]),
-		.ALU_control(ALU_control       )
-	);
-
-
-	wire [63:0] ALU1;
-	wire [63:0] ALU2;
-	assign ALU1 = ReadData1;
-	assign ALU2 = (ALUSrc == 0) ? ReadData2 : ExImm;
-
-
-
-	wire [63:0] ALU_result;
-	ALU u_ALU (
-		.ALU_control(ALU_control),
-		.A1         (ALU1       ),
-		.A2         (ALU2       ),
-		.Y          (ALU_result ),
-		.zero       (Zero       ),
-		.s_less     (s_Less     ),
-		.u_less     (u_Less     )
-	);
-
-
-	wire [63:0] MemData;
-	DataMemory u_DataMemory (
-		.clk      (clk       ),
-		.MemWrite (MemWrite  ),
-		.MemRead  (MemRead   ),
-		.address  (ALU_result),
-		.WriteData(ReadData2 ),
-		.ReadData (MemData   )
-	);
-	assign WriteData = (MemtoReg == 0) ? ALU_result : MemData;
+    initial begin
+        $dumpfile("wave.vcd");
+        $dumpvars;
+    end
 endmodule
