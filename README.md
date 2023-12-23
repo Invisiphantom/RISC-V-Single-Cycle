@@ -19,7 +19,7 @@ Web模拟器：[RISC-V Interpreter](https://www.cs.cornell.edu/courses/cs3410/20
 所以需要手动从Github下载工具链并添加到环境变量  
 #### 从riscv-gnu-toolchain下载编译好的工具链
 [Releases · riscv-gnu-toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain/releases)   
-![](img/RISC-V单周期CPU设计.png)
+![](img/RISC-V单周期CPU设计.png)   
 #### 解压后将其移动至`/opt/riscv`文件夹
 ```bash
 sudo mv riscv /opt/riscv
@@ -63,7 +63,7 @@ Hello World!
 ```
 > C/C++: Select IntelliSense Configuration
 ```
-![](img/RISC-V单周期CPU设计-1.png)
+![](img/RISC-V单周期CPU设计-1.png)     
 修改Code-Runner的指令匹配规则  
 ```json
 "code-runner.executorMap": {
@@ -76,7 +76,7 @@ Hello World!
 
 ### 整体架构图(《cod RISC-V Edition》 P260)
 
-![](img/RISC-V单周期CPU设计-2.png)
+![](img/RISC-V单周期CPU设计-2.png)   
 - PC: 选择PCaddress的更新方式(累加or跳转)
 - InstMem: 从内存中取出PCaddress地址处的指令
 - Control: 将指令进行译码
@@ -87,7 +87,7 @@ Hello World!
 - Mem: 执行内存的读写操作
 
 ### RISC-V RV32-I指令集([RISC-V Reference](https://www.cs.sfu.ca/~ashriram/Courses/CS295/assets/notebooks/RISCV/RISCV_CARD.pdf))
-![](img/RISC-V单周期CPU设计-3.png)
+![](img/RISC-V单周期CPU设计-3.png)   
 
 #### 译码器`Control`的输出信号
 ```
@@ -599,9 +599,9 @@ endmodule
 #### RegWrite
 - 选择寄存器写回时的数据来源
 ```
-jal jalr: rd = PC + 4
-Load    : rd = Mem[]
-other   : rd = aluResult
+jal jalr : rd = PC + 4
+Load     : rd = Mem[]
+other    : rd = aluResult
 ```
 
 ```verilog
@@ -623,7 +623,7 @@ module RegWrite (
 endmodule
 ```
 
-#### 最顶层模块arch
+#### RISC-V顶层模块arch
 ```verilog
 module arch #(
     parameter MEM_SIZE   = 2048,    // 内存大小默认2048字节
@@ -927,7 +927,7 @@ vvp arch && rm arch
 gtkwave wave.vcd && cd ..
 ```
 
-![](img/RISC-V单周期CPU设计-4.png)
+![](img/RISC-V单周期CPU设计-4.png)      
 
 #### 使用`zcmd.sh`一键执行上述所有操作
 ```bash
