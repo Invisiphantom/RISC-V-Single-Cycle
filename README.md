@@ -71,7 +71,7 @@ Hello World!
         "cpp": "cd $dir && riscv32-unknown-linux-gnu-g++ -Og $fileName -o $fileNameWithoutExt && riscv32-unknown-linux-gnu-objdump -d $dir$fileNameWithoutExt > $dir$fileNameWithoutExt.S && qemu-riscv32 $dir$fileNameWithoutExt",
     },
 ```
-这样就可以通过`Ctrl+Alt+N`一键编译，反汇编和运行了   
+这样就可以通过`Ctrl+Alt+N`实现一键编译，反汇编和运行了   
   
 
 ### 整体架构图(《cod RISC-V Edition》 P260)
