@@ -4,7 +4,13 @@ module PC (
     output reg [31:0] PCaddress
 );
 
-    initial PCaddress = {32{1'b0}};
+    // 初始化PC指向main函数
+    reg [31:0] PCinitial[0:0];
+    initial begin
+        $readmemh("/home/ethan/RISC-V-Single-Cycle/ROM-PC.bin", PCinitial);
+        PCaddress = PCinitial[0];
+    end
+    
     always @(posedge clk) begin
         PCaddress <= PCnext;
     end

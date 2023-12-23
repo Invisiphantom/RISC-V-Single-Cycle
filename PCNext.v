@@ -4,6 +4,7 @@ module PCNext (
     input Halt,
 
     input Cnd,
+    input Jump,
     input JumpReg,
     input [31:0] imm,
     input [31:0] aluResult,
@@ -12,7 +13,7 @@ module PCNext (
 
     always @(*) begin
         if (JumpReg == 1'b1) PCnext <= aluResult;
-        else if (Cnd == 1'b1) PCnext <= PCaddress + (imm << 1);
+        else if (Cnd | Jump == 1'b1) PCnext <= PCaddress + imm;
         else if (Halt == 1'b1) PCnext <= PCaddress;
         else PCnext <= PCincre;
     end

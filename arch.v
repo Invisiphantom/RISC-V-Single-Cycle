@@ -18,6 +18,7 @@ module arch (
 
     wire Halt;
     wire Cnd;
+    wire Jump;
     wire JumpReg;
     wire [31:0] imm;
     wire [31:0] aluResult;
@@ -26,6 +27,7 @@ module arch (
         .PCincre  (PCincre),
         .Halt     (Halt),
         .Cnd      (Cnd),
+        .Jump     (Jump),
         .JumpReg  (JumpReg),
         .imm      (imm),
         .aluResult(aluResult),
@@ -44,7 +46,6 @@ module arch (
     wire MemRead;
     wire MemWrite;
     wire Branch;
-    wire Jump;
     wire Lui;
     wire Auipc;
     Control u_Control (
@@ -121,7 +122,6 @@ module arch (
 
     Branch u_Branch (
         .Branch(Branch),
-        .Jump  (Jump),
         .zero  (zero),
         .s_less(s_less),
         .u_less(u_less),
