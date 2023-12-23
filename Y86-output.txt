@@ -1,1 +1,0 @@
-VCD info: dumpfile wave.vcd opened for output.

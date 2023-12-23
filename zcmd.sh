@@ -7,5 +7,5 @@ python3 -u ROM.py
 
 iverilog -y $PWD arch.v -o bin/arch
 cd bin && rm -f *.vcd
-vvp arch > ../Y86-output.txt && rm arch
+vvp arch && rm arch
 gtkwave wave.vcd && cd ..
