@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # 将ROM.S中的汇编指令转换为机器码写入ROM.bin中
-# 将main函数的地址写入ROM-PC.bin中
+# 将main函数的入口地址写入ROM-PC.bin中
 import os
 
 # 读取ROM.S文件

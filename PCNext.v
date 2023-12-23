@@ -13,7 +13,7 @@ module PCNext (
 
     always @(*) begin
         if (JumpReg == 1'b1) PCnext <= aluResult; // jalr
-        else if (Jump | Cnd == 1'b1) PCnext <= PCaddress + imm; // jal or branch
+        else if (Jump | Cnd == 1'b1) PCnext <= PCaddress + imm; // jal or Branch
         else if (Halt == 1'b1) PCnext <= PCaddress; // halt
         else PCnext <= PCincre; // normal PC+=4
     end

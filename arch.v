@@ -46,7 +46,6 @@ module arch #(
     );
 
 
-
     wire RegWrite;
     wire ALUSrc;
     wire [1:0] ALUOp;
@@ -128,7 +127,6 @@ module arch #(
         .u_less    (u_less)
     );
 
-
     Branch u_Branch (
         .Branch(Branch),
         .zero  (zero),
@@ -150,7 +148,6 @@ module arch #(
         .writeData_M(readData2_R),
         .readData_M (readData_M)
     );
-
 
     RegWrite u_RegWrite (
         .MemRead    (MemRead),

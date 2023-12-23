@@ -1,3 +1,4 @@
+#!/usr/bin/bash
 riscv32-unknown-linux-gnu-gcc -Og -march=rv32id ROM.c -o ROM.o -T ROM.ld
 riscv32-unknown-linux-gnu-objdump -d -j .text -M no-aliases ROM.o > ROM.S
 rm ROM.o
