@@ -7,8 +7,8 @@ module ALUControl (
 
     always @(*) begin
         case (ALUOp)
-            2'b00: aluControl <= 4'b0010;  // memAddr-add
-            2'b01: aluControl <= 4'b0110;  // branch-sub
+            2'b00: aluControl <= 4'b0010;  // add
+            2'b01: aluControl <= 4'b0110;  // sub
             2'b10:  // R-type
             case ({
                 funct7_30, funct3

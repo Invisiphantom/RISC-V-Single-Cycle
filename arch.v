@@ -1,4 +1,7 @@
-module arch (
+module arch #(
+    parameter MEM_SIZE   = 2048,    // 内存大小默认2048字节
+    parameter STACK_ADDR = 32'h700  // 栈指针的起始地址为1792字节
+) (
     input clk
 );
 
@@ -35,10 +38,14 @@ module arch (
     );
 
     wire [31:0] instruction;
-    InstMem u_InstMem (
+    InstMem #(
+        .MEM_SIZE(MEM_SIZE)
+    ) u_InstMem (
         .PCaddress  (PCaddress),
         .instruction(instruction)
     );
+
+
 
     wire RegWrite;
     wire ALUSrc;
@@ -66,7 +73,9 @@ module arch (
     wire [31:0] writeData_R;
     wire [31:0] readData1_R;
     wire [31:0] readData2_R;
-    Regs u_Regs (
+    Regs #(
+        .STACK_ADDR(STACK_ADDR)
+    ) u_Regs (
         .clk        (clk),
         .RegWrite   (RegWrite),
         .readReg1   (instruction[19:15]),
@@ -77,11 +86,11 @@ module arch (
         .readData2_R(readData2_R)
     );
 
-    ImmGen u_ImmGen(
-    	.instruction (instruction ),
-        .imm         (imm         )
+    ImmGen u_ImmGen (
+        .instruction(instruction),
+        .imm        (imm)
     );
-    
+
 
     wire [3:0] aluControl;
     ALUControl u_ALUControl (
@@ -130,7 +139,9 @@ module arch (
     );
 
     wire [31:0] readData_M;
-    Mem u_Mem (
+    Mem #(
+        .MEM_SIZE(MEM_SIZE)
+    ) u_Mem (
         .clk        (clk),
         .MemRead    (MemRead),
         .MemWrite   (MemWrite),

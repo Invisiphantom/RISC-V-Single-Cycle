@@ -1,11 +1,11 @@
-module InstMem (
+module InstMem #(
+    parameter MEM_SIZE = 2048
+) (
     input  [31:0] PCaddress,
     output [31:0] instruction
 );
 
-    // 总共2048字节的内存空间
-    parameter MEM_SIZE = 2048 / 4;
-    reg [31:0] inst_mem[0:MEM_SIZE - 1];
+    reg [31:0] inst_mem[0:MEM_SIZE / 4 - 1];
 
     // 使用绝对路径
     initial $readmemh("/home/ethan/RISC-V-Single-Cycle/ROM.bin", inst_mem);

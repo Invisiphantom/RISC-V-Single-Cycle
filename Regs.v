@@ -1,4 +1,6 @@
-module Regs (
+module Regs #(
+    parameter STACK_ADDR = 32'h700  // 栈指针的起始地址
+) (
     input         clk,
     input         RegWrite,
     input  [ 4:0] readReg1,
@@ -29,13 +31,15 @@ module Regs (
 );
 
     integer i;
+
     reg [31:0] Register[0:31];
     initial begin
         for (i = 0; i < 32; i = i + 1) Register[i] <= {32{1'b0}};
-        Register[2] <= 32'h700;  // 栈指针初始设置为0x700(1792)
+        Register[2] <= STACK_ADDR;
     end
 
     always @(posedge clk) begin
+        // x0寄存器不可写
         if (RegWrite && (writeReg != 5'b00000)) Register[writeReg] <= writeData_R;
     end
 
@@ -61,5 +65,4 @@ module Regs (
     assign a5 = Register[15];
     assign a6 = Register[16];
     assign a7 = Register[17];
-
 endmodule

@@ -1,16 +1,16 @@
 module Control (
     input      [6:0] Opcode,
     output           RegWrite,
-    output           ALUSrc,
-    output     [1:0] ALUOp,
-    output           MemRead,
-    output           MemWrite,
-    output           Branch,
-    output           Jump,
-    output           JumpReg,
-    output           Lui,
-    output           Auipc,
-    output reg       Halt
+    output           ALUSrc,    // 0:rs2 1:imm
+    output     [1:0] ALUOp,     // 00:add 01:sub 10:R-type 11:I-type
+    output           MemRead,   // Load
+    output           MemWrite,  // Store
+    output           Branch,    // Branch
+    output           Jump,      // jal
+    output           JumpReg,   // jalr
+    output           Lui,       // lui
+    output           Auipc,     // auipc
+    output reg       Halt       // halt
 );
 
     initial Halt = 1'b0;
@@ -28,7 +28,7 @@ module Control (
             7'b0110111: control <= 11'b11_00_0000010;  // lui
             7'b0010111: control <= 11'b11_00_0000001;  // auipc
             default: begin
-                Halt <= 1'b1;
+                Halt <= 1'b1; // 遇到非法指令就停机
                 control <= 11'bxxxxxxxxxxx;
             end
         endcase

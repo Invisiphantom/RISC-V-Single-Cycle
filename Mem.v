@@ -1,4 +1,6 @@
-module Mem (
+module Mem #(
+    parameter MEM_SIZE = 2048
+) (
     input             clk,
     input             MemRead,
     input             MemWrite,
@@ -8,8 +10,6 @@ module Mem (
     output reg [31:0] readData_M
 );
 
-    // 总共2048字节的内存空间
-    parameter MEM_SIZE = 2048;
     reg [7:0] mem[0:MEM_SIZE - 1];
 
     always @(MemRead or MemWrite or memAddr or writeData_M) begin

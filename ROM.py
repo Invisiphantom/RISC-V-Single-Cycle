@@ -11,8 +11,8 @@ hex_main_addr = ""
 with open("ROM.bin", "w") as f:
     # 首先写入2048字节的00
     ROM_content = ["00000000" for _ in range(int(2048 / 4))]
-    # 从第70行开始读取ROM.S文件
-    for line in lines[70:]:
+    # 从第68行开始读取ROM.S文件
+    for line in lines[68:]:
         add_inst = line. split(":")
         if add_inst[0].endswith("<main>"):
             hex_main_addr = add_inst[0].strip().split(" ")[0]

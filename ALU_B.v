@@ -5,7 +5,7 @@ module ALU_B(
     output reg [31:0] aluB
 );
     always @(*) begin
-        if(ALUSrc == 1'b0) aluB = readData2_R;
-        else aluB = imm;
+        if(ALUSrc == 1'b0) aluB = readData2_R; // rs2
+        else aluB = imm; // imm
     end
 endmodule

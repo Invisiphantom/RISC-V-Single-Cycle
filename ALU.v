@@ -19,9 +19,9 @@ module ALU (
             4'b0111: aluResult <= aluA ^ aluB;  // xor
             4'b0001: aluResult <= aluA | aluB;  // or
             4'b0000: aluResult <= aluA & aluB;  // and
-            4'b0011: aluResult <= aluA << aluB[4:0];   // sll
-            4'b1000: aluResult <= aluA >> aluB[4:0];   // srl
-            4'b1010: aluResult <= aluA >>> aluB[4:0];  // sra
+            4'b0011: aluResult <= aluA << aluB[4:0];   // sll imm[0:4]
+            4'b1000: aluResult <= aluA >> aluB[4:0];   // srl imm[0:4]
+            4'b1010: aluResult <= aluA >>> aluB[4:0];  // sra imm[0:4]
             4'b0100: aluResult <= s_less;  // slt
             4'b0101: aluResult <= u_less;  // sltu
             default: aluResult <= {32{1'bx}};
