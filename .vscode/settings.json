@@ -1,0 +1,6 @@
+{
+    "C_Cpp.default.compilerPath": "/opt/riscv/bin/riscv32-unknown-linux-gnu-gcc",
+    "files.associations": {
+        "stdio.h": "c"
+    }
+}
